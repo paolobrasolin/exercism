@@ -1,5 +1,5 @@
 module Acronym
   def self.abbreviate(phrase)
-    phrase.split(/ |-/).map(&:chr).join.upcase
+    phrase.scan(/\b\w/).join.upcase
   end
 end

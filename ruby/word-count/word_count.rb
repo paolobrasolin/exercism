@@ -1,23 +1,19 @@
 class Phrase
-  WORDS = /\w+(?:'t)?/i
+  WORDS = /\b[\w']+\b/
 
   def initialize(phrase)
     @phrase = phrase
   end
 
   def word_count
-    count_occurrences(words)
+    words.each_with_object(Hash.new(0)) do |word, counter|
+      counter[word] += 1
+    end
   end
 
 private
 
   def words
     @phrase.downcase.scan(WORDS)
-  end
-
-  def count_occurrences(items)
-    items.each_with_object(Hash.new(0)) do |item, counter|
-      counter[item] += 1
-    end
   end
 end

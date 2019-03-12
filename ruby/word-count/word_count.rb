@@ -6,8 +6,18 @@ class Phrase
   end
 
   def word_count
-    @phrase.scan(WORDS).each_with_object(Hash.new(0)) do |word,h|
-      h[word.downcase] += 1
+    count_occurrences(words)
+  end
+
+private
+
+  def words
+    @phrase.downcase.scan(WORDS)
+  end
+
+  def count_occurrences(items)
+    items.each_with_object(Hash.new(0)) do |item, counter|
+      counter[item] += 1
     end
   end
 end

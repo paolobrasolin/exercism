@@ -1,9 +1,9 @@
 module Pangram (isPangram) where
 
-
 import Data.Char (toUpper)
 
 isPangram :: String -> Bool
-isPangram text = (map toUpper text) `covers` ['A'..'Z']
+isPangram text = upperText `covers` ['A'..'Z']
   where
-    covers xs ys = all (\x -> elem x xs) ys
+    upperText = map toUpper text
+    covers xs = all (`elem` xs)

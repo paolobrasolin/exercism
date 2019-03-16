@@ -1,16 +1,19 @@
 module Bob (responseFor) where
 
-import Text.Regex.PCRE
+import Data.Char (isSpace, isLetter, isUpper)
+import qualified Data.Text as T
 
-responseFor :: String -> String
+responseFor :: T.Text -> T.Text
 responseFor xs
-  | isSilence = "Fine. Be that way!"
+  | isSilence = T.pack "Fine. Be that way!"
   | isYelling &&
-    isInquiry = "Calm down, I know what I'm doing!"
-  | isYelling = "Whoa, chill out!"
-  | isInquiry = "Sure."
-  | otherwise = "Whatever."
+    isInquiry = T.pack "Calm down, I know what I'm doing!"
+  | isYelling = T.pack "Whoa, chill out!"
+  | isInquiry = T.pack "Sure."
+  | otherwise = T.pack "Whatever."
   where
-    isSilence = xs =~ "\\A\\s*\\Z"
-    isYelling = xs =~ "\\A\\P{Ll}+\\Z" && xs =~ "\\p{Lu}"
-    isInquiry = xs =~ "\\?\\s*\\Z"
+    compact = T.filter (not.isSpace) xs
+    letters = T.filter isLetter compact
+    isSilence = T.null compact
+    isYelling = not (T.null letters) && T.all isUpper letters
+    isInquiry = T.last compact == '?'

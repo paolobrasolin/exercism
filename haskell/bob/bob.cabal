@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2f3b2b9618495bc8e0ff075f56dd16c3ba27b9cfcecde06512ffdccae8756c56
+-- hash: 3eb6d3cc4d9d822e5c9b92ae31e9eb0f07f0fbe11317c9b705f85e893aa38577
 
 name:           bob
 version:        1.4.0.10
@@ -20,7 +20,7 @@ library
   ghc-options: -Wall
   build-depends:
       base
-    , regex-pcre
+    , text
   default-language: Haskell2010
 
 test-suite test
@@ -34,5 +34,5 @@ test-suite test
       base
     , bob
     , hspec
-    , regex-pcre
+    , text
   default-language: Haskell2010

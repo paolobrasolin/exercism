@@ -3,6 +3,7 @@ version: 1.4.0.10
 
 dependencies:
   - base
+  - regex-pcre
 
 library:
   exposed-modules: Bob

@@ -7,17 +7,23 @@ class Scrabble
     K: 5,
     J: 8, X: 8,
     Q: 10, Z: 10,
-  }.transform_keys(&:to_s)
+  }.transform_keys!(&:to_s)
 
   def initialize(word)
-    @letters = word.to_s.upcase.scan(/[A-Z]/)
+    @word = word
   end
 
   def score
-    LETTERS_SCORES.values_at(*@letters).sum
+    letters.sum(&LETTERS_SCORES)
   end
 
   def self.score(word)
     new(word).score
+  end
+
+private 
+
+  def letters
+    @word.to_s.upcase.scan(/[A-Z]/)
   end
 end

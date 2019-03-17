@@ -7,8 +7,7 @@ module Luhn
   end
 
   def self.checksum(*digits)
-    digits.reverse.each_slice(2).sum do |even, odd|
-      next even if odd.nil?
+    digits.reverse.each_slice(2).sum do |even, odd=0|
       even + clamped_double(odd)
     end
   end

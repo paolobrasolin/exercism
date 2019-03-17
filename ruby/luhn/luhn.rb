@@ -3,14 +3,21 @@ module Luhn
 
   def self.valid?(string)
     return false unless string.match?(TWO_OR_MORE_DIGITS)
-    digits = string.scan(/\d/).map(&:to_i)
-    checksum(*digits).modulo(10).zero?
+    checksum(*digits(string)).modulo(10).zero?
   end
 
   def self.checksum(*digits)
-    digits.reverse.each_with_index.sum do |d, index|
-      next d if index.even?
-      (2*d).yield_self { |n| n>9 ? n-9 : n } 
+    digits.reverse.each_slice(2).sum do |even, odd|
+      next even if odd.nil?
+      even + clamped_double(odd)
     end
+  end
+
+  def self.digits(string)
+    string.scan(/\d/).map(&:to_i)
+  end
+
+  def self.clamped_double(n)
+    n>4 ? 2*n-9 : 2*n
   end
 end

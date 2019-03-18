@@ -1,32 +1,30 @@
 class Clock
-  MS_PER_H = 60
-  HS_PER_D = 24
+  MINUTES_PER_HOUR = 60
+  HOURS_PER_DAY = 24
 
   def initialize(hour: 0, minute: 0)
-    @minutes = hour * MS_PER_H + minute
-    @minutes %= HS_PER_D * MS_PER_H
+    @minutes = hour * MINUTES_PER_HOUR + minute
+    @minutes %= HOURS_PER_DAY * MINUTES_PER_HOUR
   end
 
   def to_s
-    hs, ms = @minutes.divmod(MS_PER_H)
-    "%02d:%02d" % [hs % HS_PER_D, ms]
+    hs, ms = @minutes.divmod(MINUTES_PER_HOUR)
+    "%02d:%02d" % [hs % HOURS_PER_DAY, ms]
   end
 
   def ==(clock)
-    self.minutes == clock.minutes
+    @minutes == clock.minutes
   end
 
   def +(clock)
-    self.class.new(minute: self.minutes + clock.minutes)
+    self.class.new(minute: @minutes + clock.minutes)
   end
 
   def -(clock)
-    self.class.new(minute: self.minutes - clock.minutes)
+    self.class.new(minute: @minutes - clock.minutes)
   end
 
 protected
 
-  def minutes
-    @minutes
-  end
+  attr_accessor :minutes
 end

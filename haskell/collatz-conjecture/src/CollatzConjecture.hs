@@ -9,6 +9,5 @@ collatz n
 
 collatzOp :: (Integral a) => a -> a
 collatzOp n
-  | 1 == n = 1
   | odd n = 3 * n + 1
   | otherwise = quot n 2

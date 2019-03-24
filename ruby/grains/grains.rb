@@ -1,10 +1,12 @@
 module Grains
+  BOARD_SIZE = 64
+
   def self.square(n)
-    raise ArgumentError unless (1..64).include?(n)
+    raise ArgumentError unless (1..BOARD_SIZE).include?(n)
     2**(n-1)
   end
 
   def self.total
-    2**64-1
+    2**BOARD_SIZE-1
   end
 end

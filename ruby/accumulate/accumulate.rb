@@ -1,9 +1,6 @@
 class Array
   def accumulate
-    accumulator = Array.new
-    0.upto(length - 1).each do |i|
-      accumulator << yield(self[i])
-    end
-    accumulator
+    return enum_for(:accumulate) unless block_given?
+    each_with_object([]) { |obj, acc| acc << yield(obj) }
   end
 end

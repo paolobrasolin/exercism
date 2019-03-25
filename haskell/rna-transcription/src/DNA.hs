@@ -1,8 +1,7 @@
 module DNA (toRNA) where
 
 toRNA :: String -> Either Char String
-toRNA "" = Right ""
-toRNA (d:ds) = (:) <$> (nucleotideToRNA d) <*> (toRNA ds)
+toRNA = traverse nucleotideToRNA
 
 nucleotideToRNA :: Char -> Either Char Char
 nucleotideToRNA d = case d of

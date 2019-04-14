@@ -1,0 +1,37 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.1.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: a19ca5a93193e8a5a932709101b51a960e85a3ca7b29721960a8f2cefb3ca0db
+
+name:           isbn-verifier
+version:        2.7.0.9
+build-type:     Simple
+
+library
+  exposed-modules:
+      IsbnVerifier
+  other-modules:
+      Paths_isbn_verifier
+  hs-source-dirs:
+      src
+  ghc-options: -Wall
+  build-depends:
+      base
+    , regex-pcre
+  default-language: Haskell2010
+
+test-suite test
+  type: exitcode-stdio-1.0
+  main-is: Tests.hs
+  other-modules:
+      Paths_isbn_verifier
+  hs-source-dirs:
+      test
+  build-depends:
+      base
+    , hspec
+    , isbn-verifier
+  default-language: Haskell2010

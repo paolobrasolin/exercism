@@ -1,19 +1,15 @@
 class Result < Array
-  FLIPPED = %w{win loss draw draw loss win}.each_slice(2).to_h
+  FLIPPED = { "win" => "loss", "draw" => "draw", "loss" => "win" }
   SCORES = { "win" => 3, "draw" => 1, "loss" => 0 }
 
-  attr_reader :team_name
-
-  def initialize(team_name)
-    @team_name = team_name
-  end
+  attr_accessor :team_name
 
   def points
     sum(&SCORES)
   end
 
-  def <=>(result)
-    [-points, team_name] <=> [-result.points, result.team_name]
+  def <=>(other)
+    [-points, team_name] <=> [-other.points, other.team_name]
   end
 
   def to_board_row
@@ -39,8 +35,8 @@ class Board
     @rows = [HEADER]
   end
 
-  def concat(row)
-    @rows.concat(row)
+  def push(*rows)
+    tap { @rows.push(*rows) }
   end
 
   def render
@@ -62,14 +58,16 @@ module Tournament
 
   def self.tally(input)
     board_rows = read_results(input).sort.map(&:to_board_row)
-    Board.new.tap { |board| board.concat(board_rows) }.render
+    Board.new.push(*board_rows).render
   end
 
   class << self
   private
 
     def read_results(input)
-      roster = Hash.new { |h, k| h[k] = Result.new(k) }
+      roster = Hash.new do |h, k|
+        h[k] = Result.new.tap { |r| r.team_name = k }
+      end
       input.scan(DATAROW).each_with_object(roster) do |(home, away, result), roster|
         roster[home] << result
         roster[away] << Result::FLIPPED[result]

@@ -21,6 +21,8 @@ ex_test () {
     ( cd "$1" && find *.rb | entr -c -r ruby *_test.rb -p )
   elif [[ $1 == bash/* ]]; then
     ( cd "$1" && find *.sh | entr -c -r bats -p *_test.sh )
+  elif [[ $1 == clojure/* ]]; then
+    ( cd "$1" && find *.clj | entr -c -r lein test )
   else
     echo Not implemented
   fi
